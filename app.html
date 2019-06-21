@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Giftastic</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <h1 id="title"></h1>
+  <div id="gif"></div>
+
+  <div id='topic-button'></div>
+
+
+
+
+
+
+
+
+ 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript"> 
+
+
+
+
+function random(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+///the subject in quotes will have to be a variable that changes based on the subject of the button
+var queryURL = "https://api.giphy.com/v1/gifs/search?q='cats'&api_key=uLjFKDt4dmABUJvRABR5ppKmhQPvtmiB";
+
+
+$.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function (response) {
+      console.log(response);
+      var iGIF = random(0, response.data.length - 1);
+      $("#title").text(response.data[iGIF].title);
+      $("#gif").html(`<img src="${response.data[iGIF].images["downsized"].url}+">`);
+      
+    });
+
+var topics = ['cats', 'synths', 'gundam', 'books', 'noise', 'music']
+
+for (i = 0; i < topics.length; i++){
+    var topic = $('<button>');
+    topic.addClass('topic');
+    topic.attr(topics[i]);
+    topic.text(topics[i]);
+    $('#topic-button').append(topic);
+
+    
+}
+
+</script>
+
+
+</body>
+
+</html>
