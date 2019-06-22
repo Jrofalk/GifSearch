@@ -34,9 +34,19 @@ function random(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-///the subject in quotes will have to be a variable that changes based on the subject of the button
-var queryURL = "https://api.giphy.com/v1/gifs/search?q='cats'&api_key=uLjFKDt4dmABUJvRABR5ppKmhQPvtmiB";
 
+var topics = ['cats', 'synths', 'gundam', 'books', 'noise', 'music'];
+
+
+
+function displayTopic(){
+
+var eachTopic = $(this).attr("topic-name");
+
+
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q="+ eachTopic +"&api_key=uLjFKDt4dmABUJvRABR5ppKmhQPvtmiB";
+    
+    
 
 $.ajax({
       url: queryURL,
@@ -44,22 +54,25 @@ $.ajax({
     }).then(function (response) {
       console.log(response);
       var iGIF = random(0, response.data.length - 1);
-      $("#title").text(response.data[iGIF].title);
-      $("#gif").html(`<img src="${response.data[iGIF].images["downsized"].url}+">`);
-      
-    });
+      $('#gif').html(`<img src="${response.data[iGIF].images["downsized"].url}+">`);
+});
+}
 
-var topics = ['cats', 'synths', 'gundam', 'books', 'noise', 'music']
 
-for (i = 0; i < topics.length; i++){
+function showButtons (){
+  for (i = 0; i < topics.length; i++){
     var topic = $('<button>');
     topic.addClass('topic');
-    topic.attr(topics[i]);
+    topic.attr('topic-name',topics[i]);
     topic.text(topics[i]);
     $('#topic-button').append(topic);
-
-    
+    }
 }
+
+
+$(document).on("click", '.topic', displayTopic);
+
+showButtons();
 
 </script>
 
