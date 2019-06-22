@@ -12,6 +12,7 @@
 
   <h1 id="title"></h1>
   <div id="gif"></div>
+  <div id='rating'></div>
 
   <div id='topic-button'></div>
 
@@ -44,7 +45,7 @@ function displayTopic(){
 var eachTopic = $(this).attr("topic-name");
 
 
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q="+ eachTopic +"&api_key=uLjFKDt4dmABUJvRABR5ppKmhQPvtmiB";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q="+ eachTopic +"&api_key=uLjFKDt4dmABUJvRABR5ppKmhQPvtmiB&limit=10";
     
     
 
@@ -53,8 +54,9 @@ $.ajax({
       method: "GET"
     }).then(function (response) {
       console.log(response);
-      var iGIF = random(0, response.data.length - 1);
-      $('#gif').html(`<img src="${response.data[iGIF].images["downsized"].url}+">`);
+      var gif = random(0, response.data.length - 1);
+      $('#gif').html(`<img src="${response.data[gif].images["480w_still"].url}+">`);
+      $('#rating').html(response.data[gif].rating);
 });
 }
 
