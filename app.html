@@ -20,8 +20,6 @@
         <input id="add-topic" type="submit" value="Add Topic">
     </form>
 
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
 
@@ -33,7 +31,7 @@
 
             var eachTopic = $(this).attr("topic-name");
 
-            //this limits gifs to ten
+            
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + eachTopic + "&api_key=uLjFKDt4dmABUJvRABR5ppKmhQPvtmiB&limit=10";
 
 
@@ -62,6 +60,7 @@
 
 
         function showButtons() {
+            $("#topic-button").empty();
             for (i = 0; i < topics.length; i++) {
                 var topic = $('<button>');
                 topic.addClass('topic');
@@ -82,6 +81,13 @@
                 $(this).attr("data-state", "still");
             }
         }
+
+        $("#add-topic").on("click", function(event) {
+        event.preventDefault();
+        var eachTopic = $("#enter-topic").val().trim();
+        topics.push(eachTopic);
+        showButtons();
+      });
 
         $(document).on('click', '.gif', playImage);
 
