@@ -13,6 +13,14 @@
     <div id='topic-button'></div>
     <div id='gif-image'></div>
 
+    <form id="topic-form">
+        <label for="enter-topic">Add Topic</label>
+        <input type="text" id="enter-topic">
+        <br>
+        <input id="add-topic" type="submit" value="Add Topic">
+    </form>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
@@ -35,19 +43,19 @@
             }).then(function (response) {
                 console.log(response);
                 var results = response.data;
-                for(i = 0; i < results.length; i++){
-                  var image = $('<img>');
-                  var static = results[i].images.fixed_height_small_still.url;
-                  var animated = results[i].images.fixed_height_small.url;
-                  image.addClass('gif');
-                  image.attr('src', static);
-                  image.attr('gif-image', results[i]);
-                  image.attr("data-state", "still");
-                  image.attr('data-still', static);
-                  image.attr('data-animate', animated);
-                  image.text(results[i]);
-                  $('#gif-image').append(image);
-                  $('#gif-image').append(results[i].rating)
+                for (i = 0; i < results.length; i++) {
+                    var image = $('<img>');
+                    var static = results[i].images.fixed_height_small_still.url;
+                    var animated = results[i].images.fixed_height_small.url;
+                    image.addClass('gif');
+                    image.attr('src', static);
+                    image.attr('gif-image', results[i]);
+                    image.attr("data-state", "still");
+                    image.attr('data-still', static);
+                    image.attr('data-animate', animated);
+                    image.text(results[i]);
+                    $('#gif-image').append(image);
+                    $('#gif-image').append(results[i].rating)
                 }
             });
         }
@@ -64,16 +72,16 @@
         }
 
 
-    function playImage(){
-      var state = $(this).attr("data-state");
-      if (state === "still") {
-        $(this).attr("src", $(this).attr("data-animate"));
-        $(this).attr("data-state", "animate");
-      } else {
-        $(this).attr("src", $(this).attr("data-still"));
-        $(this).attr("data-state", "still");
-      }
-    }
+        function playImage() {
+            var state = $(this).attr("data-state");
+            if (state === "still") {
+                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("data-state", "animate");
+            } else {
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("data-state", "still");
+            }
+        }
 
         $(document).on('click', '.gif', playImage);
 
