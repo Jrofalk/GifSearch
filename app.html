@@ -11,7 +11,6 @@
 <body>
 
     <div id='topic-button'></div>
-    <div id='rating'></div>
     <div id='gif-image'></div>
 
 
@@ -38,11 +37,17 @@
                 var results = response.data;
                 for(i = 0; i < results.length; i++){
                   var image = $('<img>');
+                  var static = results[i].images.fixed_height_small_still.url;
+                  var animated = results[i].images.fixed_height_small.url;
                   image.addClass('gif');
+                  image.attr('src', static);
                   image.attr('gif-image', results[i]);
+                  image.attr("data-state", "still");
+                  image.attr('data-still', static);
+                  image.attr('data-animate', animated);
                   image.text(results[i]);
-                  $('#gif-image').append(`<img src="${results[i].images["480w_still"].url}+">`);
-                  $('#gif-image').append(results[i].rating);
+                  $('#gif-image').append(image);
+                  $('#gif-image').append(results[i].rating)
                 }
             });
         }
@@ -59,9 +64,23 @@
         }
 
 
+    function playImage(){
+      var state = $(this).attr("data-state");
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+      }
+    }
+
+        $(document).on('click', '.gif', playImage);
+
         $(document).on("click", '.topic', displayTopic);
 
         showButtons();
+
 
     </script>
 
