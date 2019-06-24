@@ -10,73 +10,60 @@
 
 <body>
 
-  <h1 id="title"></h1>
-  <div id="gif"></div>
-  <div id='rating'></div>
-
-  <div id='topic-button'></div>
+    <div id='topic-button'></div>
+    <div id='rating'></div>
+    <div id='gif-image'></div>
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
 
 
+        var topics = ['cats', 'synths', 'gundam', 'books', 'noise', 'music'];
 
 
+        function displayTopic() {
+
+            var eachTopic = $(this).attr("topic-name");
+
+            //this limits gifs to ten
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + eachTopic + "&api_key=uLjFKDt4dmABUJvRABR5ppKmhQPvtmiB&limit=10";
 
 
- 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript"> 
-
-
-
-
-function random(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-
-var topics = ['cats', 'synths', 'gundam', 'books', 'noise', 'music'];
-
-
-
-function displayTopic(){
-
-var eachTopic = $(this).attr("topic-name");
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response);
+                var results = response.data;
+                for(i = 0; i < results.length; i++){
+                  var image = $('<img>');
+                  image.addClass('gif');
+                  image.attr('gif-image', results[i]);
+                  image.text(results[i]);
+                  $('#gif-image').append(`<img src="${results[i].images["480w_still"].url}+">`);
+                  $('#gif-image').append(results[i].rating);
+                }
+            });
+        }
 
 
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q="+ eachTopic +"&api_key=uLjFKDt4dmABUJvRABR5ppKmhQPvtmiB&limit=10";
-    
-    
-
-$.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function (response) {
-      console.log(response);
-      var gif = random(0, response.data.length - 1);
-      $('#gif').html(`<img src="${response.data[gif].images["480w_still"].url}+">`);
-      $('#rating').html(response.data[gif].rating);
-});
-}
+        function showButtons() {
+            for (i = 0; i < topics.length; i++) {
+                var topic = $('<button>');
+                topic.addClass('topic');
+                topic.attr('topic-name', topics[i]);
+                topic.text(topics[i]);
+                $('#topic-button').append(topic);
+            }
+        }
 
 
-function showButtons (){
-  for (i = 0; i < topics.length; i++){
-    var topic = $('<button>');
-    topic.addClass('topic');
-    topic.attr('topic-name',topics[i]);
-    topic.text(topics[i]);
-    $('#topic-button').append(topic);
-    }
-}
+        $(document).on("click", '.topic', displayTopic);
 
+        showButtons();
 
-$(document).on("click", '.topic', displayTopic);
-
-showButtons();
-
-</script>
+    </script>
 
 
 </body>
