@@ -31,7 +31,7 @@
 
             var eachTopic = $(this).attr("topic-name");
 
-            
+
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + eachTopic + "&api_key=uLjFKDt4dmABUJvRABR5ppKmhQPvtmiB&limit=10";
 
 
@@ -82,12 +82,12 @@
             }
         }
 
-        $("#add-topic").on("click", function(event) {
-        event.preventDefault();
-        var eachTopic = $("#enter-topic").val().trim();
-        topics.push(eachTopic);
-        showButtons();
-      });
+        $("#add-topic").on("click", function (event) {
+            event.preventDefault();
+            var eachTopic = $("#enter-topic").val().trim();
+            topics.push(eachTopic);
+            showButtons();
+        });
 
         $(document).on('click', '.gif', playImage);
 
