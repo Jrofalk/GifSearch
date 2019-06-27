@@ -61,6 +61,7 @@
                     var image = $('<img>');
                     var static = results[i].images.fixed_height_small_still.url;
                     var animated = results[i].images.fixed_height_small.url;
+                    var rate = $("<p>").text("Rating: " + results[i].rating);
                     image.addClass('gif');
                     image.attr('src', static);
                     image.attr('gif-image', results[i]);
@@ -69,7 +70,7 @@
                     image.attr('data-animate', animated);
                     image.text(results[i]);
                     $('#gif-image').prepend(image);
-                    $('#gif-image').prepend('Rating: ' + results[i].rating);
+                    $('#gif-image').prepend(rate);
                 }
             });
         }
