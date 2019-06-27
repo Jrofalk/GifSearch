@@ -6,6 +6,7 @@
     <title>Giftastic</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href='assets/css/style.css'>
 </head>
 
 <body>
@@ -28,11 +29,13 @@
 
 
         <div class='row'>
-            <div class='col-md-6'>
+            <div class='col-md-12'>
                 <div id='gif-image'></div>
             </div>
         </div>
     </div>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
@@ -58,8 +61,6 @@
                     var image = $('<img>');
                     var static = results[i].images.fixed_height_small_still.url;
                     var animated = results[i].images.fixed_height_small.url;
-                    var rate = results[i].rating;
-                    var showRate = $('<p>').text('Rating: ' + rate);
                     image.addClass('gif');
                     image.attr('src', static);
                     image.attr('gif-image', results[i]);
@@ -68,7 +69,7 @@
                     image.attr('data-animate', animated);
                     image.text(results[i]);
                     $('#gif-image').prepend(image);
-                    $('#gif-image').prepend(showRate);
+                    $('#gif-image').prepend('Rating: ' + results[i].rating);
                 }
             });
         }
