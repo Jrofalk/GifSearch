@@ -10,15 +10,29 @@
 
 <body>
 
-    <div id='topic-button'></div>
-    <div id='gif-image'></div>
+    <div class=container>
 
-    <form id="topic-form">
-        <label for="enter-topic">Add Topic</label>
-        <input type="text" id="enter-topic">
-        <br>
-        <input id="add-topic" type="submit" value="Add Topic">
-    </form>
+        <div class='row'>
+            <div class='col-md-6'>
+                <div id='topic-button'></div>
+            </div>
+            <div class='col-md-6'>
+                <form id="topic-form">
+                    <label for="enter-topic">Add Topic</label>
+                    <input type="text" id="enter-topic">
+                    <br>
+                    <input id="add-topic" type="submit" value="Add Topic">
+                </form>
+            </div>
+        </div>
+
+
+        <div class='row'>
+            <div class='col-md-6'>
+                <div id='gif-image'></div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
@@ -34,7 +48,6 @@
 
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + eachTopic + "&api_key=uLjFKDt4dmABUJvRABR5ppKmhQPvtmiB&limit=10";
 
-
             $.ajax({
                 url: queryURL,
                 method: "GET"
@@ -45,6 +58,8 @@
                     var image = $('<img>');
                     var static = results[i].images.fixed_height_small_still.url;
                     var animated = results[i].images.fixed_height_small.url;
+                    var rate = results[i].rating;
+                    var showRate = $('<p>').text('Rating: ' + rate);
                     image.addClass('gif');
                     image.attr('src', static);
                     image.attr('gif-image', results[i]);
@@ -52,8 +67,8 @@
                     image.attr('data-still', static);
                     image.attr('data-animate', animated);
                     image.text(results[i]);
-                    $('#gif-image').append(image);
-                    $('#gif-image').append(results[i].rating)
+                    $('#gif-image').prepend(image);
+                    $('#gif-image').prepend(showRate);
                 }
             });
         }
