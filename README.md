@@ -1,5 +1,9 @@
 # GifTastic
 
+## Deployed Link:
+
+https://jrofalk.github.io/GifTastic/
+
 <h1>Note:</h1>
 <p>This is an application that utilizes Giphy to generate various gifs based on selected topics.</p>
 
